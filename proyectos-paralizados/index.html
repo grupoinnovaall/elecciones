@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ejecutivo: Inversiones Perú 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+
+        /* Executive Styling - Corporate Navy */
+        .exec-gradient {
+            background: linear-gradient(135deg, #0a2540 0%, #123e6e 100%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Table Sorting */
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        th.sortable:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar for Light Theme */
+        .scroll-custom {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .scroll-custom::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-custom::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .scroll-custom::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .scroll-custom::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Status Badges */
+        .risk-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            width: 80px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .risk-extremo {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .risk-alto {
+            background: #ffedd5;
+            color: #9a3412;
+        }
+
+        .risk-medio {
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        /* Timeline styling */
+        .timeline-line {
+            border-left: 2px solid #cbd5e1;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0a2540;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 2px #cbd5e1;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 pb-20">
+
+    <header class="exec-gradient text-white pb-16 pt-10 shadow-2xl relative border-b-4 border-red-600">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-white/10 pb-6">
+                <div class="flex items-center gap-5">
+                    <div class="bg-white p-4 rounded-xl shadow-lg">
+                        <i class="fa-solid fa-chart-line text-3xl text-red-600"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-black tracking-tight uppercase text-white">Dashboard <span
+                                class="text-red-500">Nacional</span> 2026</h1>
+                        <p class="text-xs font-medium text-blue-200 tracking-[0.2em] uppercase mt-1">Observatorio de
+                            Inversión Pública Paralizada</p>
+                    </div>
+                </div>
+                <div class="mt-6 md:mt-0 text-center md:text-right">
+                    <p class="text-xs font-bold text-blue-200 uppercase tracking-widest mb-1">Asesor</p>
+                    <p class="text-lg font-black text-white">Mg. Tomás Aguero Correa</p>
+                    <p class="text-xs text-red-400 font-bold mt-1"><i class="fa-solid fa-phone text-[10px] mr-1"></i>
+                        949 758 732</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="glass-panel p-6 rounded-2xl text-center relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-6xl"><i
+                            class="fa-solid fa-triangle-exclamation"></i></div>
+                    <p class="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2">Total Obras
+                        Paralizadas
+                    </p>
+                    <h3 class="text-4xl font-black text-white">2,741</h3>
+                    <p class="text-red-400 text-[10px] font-bold mt-2"><i class="fa-solid fa-arrow-up mr-1"></i> 12%
+                        Incremento interanual</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl text-center relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-6xl"><i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <p class="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-2">Inversión Inmovilizada
+                    </p>
+                    <h3 class="text-4xl font-black text-white">S/ 67,100 MM</h3>
+                    <p class="text-blue-200 text-[10px] font-bold mt-2">Capital Inerte Total</p>
+                </div>
+
+                <div
+                    class="glass-panel p-5 rounded-2xl relative overflow-hidden lg:col-span-2 border-l-4 border-l-red-500">
+                    <p class="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-3 text-center">
+                        Responsabilidad por Nivel de Gobierno</p>
+                    <div class="flex justify-between items-end px-4">
+                        <div class="text-center">
+                            <h3 class="text-3xl font-black text-red-500">71%</h3>
+                            <p class="text-[10px] text-white font-bold uppercase mt-1">Gobierno Local</p>
+                        </div>
+                        <div class="h-10 border-r border-white/20"></div>
+                        <div class="text-center">
+                            <h3 class="text-2xl font-black text-blue-100">15%</h3>
+                            <p class="text-[10px] text-blue-200 font-bold uppercase mt-1">Gob. Regional</p>
+                        </div>
+                        <div class="h-10 border-r border-white/20"></div>
+                        <div class="text-center">
+                            <h3 class="text-2xl font-black text-blue-100">14%</h3>
+                            <p class="text-[10px] text-blue-200 font-bold uppercase mt-1">Gob. Nacional</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-panel p-6 rounded-2xl text-center relative overflow-hidden border border-emerald-400/40 bg-emerald-500/10">
+                    <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-2">Meta de Reducción
+                    </p>
+                    <h3 class="text-4xl font-black text-emerald-400">15%</h3>
+                    <p class="text-emerald-300/80 text-[10px] font-bold mt-2">Objetivo Diciembre 2026</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 -mt-8 relative z-10">
+
+        <section class="mb-12">
+            <div
+                class="bg-white rounded-2xl card-shadow p-8 flex flex-col md:flex-row items-center justify-between border-l-8 border-emerald-600">
+                <div class="md:w-1/2 pr-8">
+                    <h2 class="text-sm font-black text-emerald-600 uppercase tracking-widest mb-2">I. Proyección
+                        Económica y Laboral</h2>
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">Generación de Empleo y PBI</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        La viabilización de los proyectos estratégicos permitiría reabsorber mano de obra calificada y
+                        dinamizar las economías locales a través de servicios de subcontratación y logística mediante la
+                        <strong class="text-slate-900">inversión privada</strong>.
+                    </p>
+                    <div class="flex gap-8">
+                        <div>
+                            <p class="text-3xl font-black text-slate-900">450,000</p>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase">Empleos Directos</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-black text-slate-900">1,200,000</p>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase">Empleos Indirectos</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="md:w-1/3 w-full mt-8 md:mt-0 bg-[#0a2540] rounded-2xl p-8 text-center relative overflow-hidden shadow-lg">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 text-8xl text-emerald-400"><i
+                            class="fa-solid fa-arrow-trend-up"></i></div>
+                    <p class="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2">Crecimiento del PBI</p>
+                    <h3 class="text-6xl font-black text-white mb-2">+2.4%</h3>
+                    <p class="text-xs text-blue-200 leading-tight">Incremento adicional en la economía del Perú por
+                        reactivación.</p>
+                    <div class="mt-4 pt-4 border-t border-white/10 text-[10px] text-blue-300 leading-tight">
+                        Estimación basada en el efecto multiplicador de la reactivación de infraestructura crítica y
+                        confianza del sector privado.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-xl font-black text-slate-900 mb-6 uppercase tracking-tight flex items-center gap-3">
+                <i class="fa-solid fa-users text-red-600"></i> II. Matriz de Impacto en la Población (4,200,000
+                Afectados)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div
+                    class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-red-600 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-slate-800 uppercase text-sm">Brecha de Salud</h3>
+                        <i class="fa-solid fa-heart-pulse text-red-600 text-xl"></i>
+                    </div>
+                    <p class="text-3xl font-black text-slate-900 mb-1">4,200,000 <span
+                            class="text-xs text-slate-500 font-semibold uppercase block mt-1">Ciudadanos
+                            afectados</span></p>
+                    <p class="text-xs text-slate-600 mt-3 border-t border-slate-100 pt-3">Por la paralización de <strong
+                            class="text-slate-900">287 hospitales</strong> y centros de atención primaria.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-blue-600 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-slate-800 uppercase text-sm">Vivienda y Saneamiento</h3>
+                        <i class="fa-solid fa-faucet-drip text-blue-600 text-xl"></i>
+                    </div>
+                    <p class="text-3xl font-black text-slate-900 mb-1">1,800,000 <span
+                            class="text-xs text-slate-500 font-semibold uppercase block mt-1">Sin Agua</span></p>
+                    <p class="text-xs text-slate-600 mt-3 border-t border-slate-100 pt-3">Afectación directa por <strong
+                            class="text-slate-900">514 proyectos</strong> de saneamiento detenidos por fallas en
+                        expediente técnico.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-emerald-600 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-slate-800 uppercase text-sm">Pérdida Agrícola</h3>
+                        <i class="fa-solid fa-wheat-awn text-emerald-600 text-xl"></i>
+                    </div>
+                    <p class="text-3xl font-black text-slate-900 mb-1">350,000 <span
+                            class="text-xs text-slate-500 font-semibold uppercase block mt-1">Hectáreas sin riego</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-3 border-t border-slate-100 pt-3">Retraso sistémico en proyectos
+                        de irrigación en la <strong class="text-slate-900">Macro Región Sur</strong>.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-slate-800 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-slate-800 uppercase text-sm">Transporte</h3>
+                        <i class="fa-solid fa-road-bridge text-slate-800 text-xl"></i>
+                    </div>
+                    <p class="text-3xl font-black text-slate-900 mb-1">3,400,000 <span
+                            class="text-xs text-slate-500 font-semibold uppercase block mt-1">Usuarios diarios</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-3 border-t border-slate-100 pt-3">Impacto crítico por <strong
+                            class="text-slate-900">631 obras</strong> viales y puentes inconclusos.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-amber-500 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-slate-800 uppercase text-sm">Educación</h3>
+                        <i class="fa-solid fa-graduation-cap text-amber-500 text-xl"></i>
+                    </div>
+                    <p class="text-3xl font-black text-slate-900 mb-1">2,880,000 <span
+                            class="text-xs text-slate-500 font-semibold uppercase block mt-1">Alumnos afectados</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-3 border-t border-slate-100 pt-3"><strong
+                            class="text-slate-900">325 colegios</strong> paralizados, operando con infraestructura
+                        precaria.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-slate-400 hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-slate-800 uppercase text-sm">Otros Sectores</h3>
+                        <i class="fa-solid fa-building-shield text-slate-400 text-xl"></i>
+                    </div>
+                    <p class="text-3xl font-black text-slate-900 mb-1">874 <span
+                            class="text-xs text-slate-500 font-semibold uppercase block mt-1">Proyectos detenidos</span>
+                    </p>
+                    <p class="text-xs text-slate-600 mt-3 border-t border-slate-100 pt-3">Incluye seguridad
+                        (comisarías), cultura y espacios públicos a nivel nacional.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-xl font-black text-slate-900 mb-6 uppercase tracking-tight flex items-center gap-3">
+                <i class="fa-solid fa-circle-exclamation text-orange-600"></i> III. Causas Principales de Paralización
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-8 bg-white p-8 rounded-2xl card-shadow">
+                    <h3 class="text-sm font-black text-slate-900 mb-4 uppercase tracking-tight text-center">Distribución
+                        Estadística por Motivo (N° Obras)</h3>
+                    <div class="relative h-[450px]">
+                        <canvas id="chartCausas"></canvas>
+                    </div>
+                </div>
+                <div class="lg:col-span-4 flex flex-col gap-4">
+                    <div class="bg-white p-5 rounded-xl card-shadow border-l-4 border-red-500">
+                        <h4 class="text-xs font-black text-slate-800 uppercase">Arbitrajes</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 italic">Controversias legales que impiden la
+                            continuidad de ejecución.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl card-shadow border-l-4 border-amber-500">
+                        <h4 class="text-xs font-black text-slate-800 uppercase">Falta de Presupuesto</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 italic">Carencia de asignación financiera para el
+                            ejercicio fiscal.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl card-shadow border-l-4 border-blue-500">
+                        <h4 class="text-xs font-black text-slate-800 uppercase">Expediente Deficiente</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 italic">Errores técnicos de diseño que requieren
+                            modificaciones estructurales.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl card-shadow border-l-4 border-emerald-500">
+                        <h4 class="text-xs font-black text-slate-800 uppercase">Abandono</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 italic">Incumplimiento de contrato por parte del
+                            ejecutor privado.</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-xl card-shadow border-l-4 border-slate-400">
+                        <h4 class="text-xs font-black text-slate-800 uppercase">Otros Motivos</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 italic">Conflictos sociales, eventos climáticos y
+                            procesos administrativos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+            <div class="lg:col-span-4 bg-white p-8 rounded-2xl card-shadow">
+                <h3 class="text-sm font-black text-slate-900 mb-6 uppercase tracking-tight text-center">Distribución
+                    Sectorial</h3>
+                <div class="relative h-[300px] w-full">
+                    <canvas id="chartSectores"></canvas>
+                </div>
+            </div>
+
+            <div
+                class="lg:col-span-8 bg-white rounded-2xl card-shadow overflow-hidden flex flex-col border border-slate-200">
+                <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                    <div>
+                        <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest">IV. Matriz Técnica
+                            Nacional (25 Regiones)</h3>
+                        <p class="text-[10px] text-slate-500 mt-1">Haz clic en los encabezados para ordenar los datos.
+                        </p>
+                    </div>
+                    <span
+                        class="text-[10px] bg-red-100 text-red-600 font-bold px-3 py-1 rounded-md uppercase tracking-tight italic"><i
+                            class="fa-solid fa-filter mr-1"></i> Ordenable</span>
+                </div>
+                <div class="scroll-custom">
+                    <table class="w-full text-left border-collapse">
+                        <thead
+                            class="sticky top-0 bg-[#0a2540] text-[10px] text-slate-200 font-black uppercase z-10 shadow-md">
+                            <tr>
+                                <th class="px-6 py-4 sortable" onclick="sortTable(0)">Departamento <i id="icon-0"
+                                        class="fa-solid fa-sort ml-1 text-slate-400"></i></th>
+                                <th class="px-6 py-4 sortable border-l border-white/10" onclick="sortTable(1)">Sector
+                                    Predominante <i id="icon-1" class="fa-solid fa-sort ml-1 text-slate-400"></i></th>
+                                <th class="px-6 py-4 text-center sortable border-l border-white/10"
+                                    onclick="sortTable(2)">N° Obras <i id="icon-2"
+                                        class="fa-solid fa-sort ml-1 text-slate-400"></i></th>
+                                <th class="px-6 py-4 text-right sortable border-l border-white/10"
+                                    onclick="sortTable(3)">Inversión (S/ MM) <i id="icon-3"
+                                        class="fa-solid fa-sort ml-1 text-slate-400"></i></th>
+                                <th class="px-6 py-4 text-center sortable border-l border-white/10"
+                                    onclick="sortTable(4)">Riesgo <i id="icon-4"
+                                        class="fa-solid fa-sort ml-1 text-slate-400"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-800 bg-white" id="regionTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 bg-white p-8 rounded-2xl card-shadow">
+            <h2 class="text-xl font-black text-slate-900 mb-8 uppercase tracking-tight flex items-center gap-3">
+                <i class="fa-solid fa-calendar-check text-blue-600"></i> V. Próximos Hitos: Timeline 2026
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="timeline-line">
+                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Agosto 2026</span>
+                    <h4 class="text-base font-black text-slate-900 mt-1 mb-2">Censo Nacional & Auditoría</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">Censo Nacional de Maquinaria Paralizada y
+                        activos abandonados. Auditoría técnica de los 500 expedientes de mayor presupuesto.</p>
+                </div>
+                <div class="timeline-line">
+                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Octubre 2026</span>
+                    <h4 class="text-base font-black text-slate-900 mt-1 mb-2">Digitalización & Transparencia</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">Lanzamiento de la plataforma <strong>"Obra
+                            Transparente"</strong>. Implementación de seguimiento satelital en tiempo real para
+                        proyectos críticos.</p>
+                </div>
+                <div class="timeline-line border-transparent">
+                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Diciembre 2026</span>
+                    <h4 class="text-base font-black text-slate-900 mt-1 mb-2">Cumplimiento de Metas</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">Meta de Reducción del 15% en el stock total
+                        de obras paralizadas. Entrega del primer lote de infraestructuras reactivadas (Quick-Wins).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-xl font-black text-slate-900 mb-6 uppercase tracking-tight flex items-center gap-3">
+                <i class="fa-solid fa-chess-knight text-slate-800"></i> VI. Estrategias de Solución Propuestas
+            </h2>
+
+            <div
+                class="bg-gradient-to-r from-[#0a2540] to-[#123e6e] p-8 rounded-2xl card-shadow text-white mb-6 border border-slate-700">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="bg-emerald-400/20 text-emerald-400 p-2 rounded-lg"><i
+                            class="fa-solid fa-users-gear"></i></div>
+                    <h3 class="text-lg font-black text-emerald-400 uppercase">Equipo de Alto Nivel para la Viabilidad
+                    </h3>
+                </div>
+                <p class="text-sm text-blue-100 leading-relaxed italic">
+                    Creación de un comité especializado de alto nivel para el monitoreo y seguimiento de los proyectos
+                    paralizados. Su objetivo principal es <strong>dar viabilidad e invitar a empresas nacionales y
+                        extranjeras</strong> a invertir y ejecutar las obras. Esta acción estratégica generará miles de
+                    puestos de empleos directos e indirectos, solucionando los grandes problemas de la población y
+                    reactivando la economía en todo el país.
+                </p>
+                <img src="equipo-monitoreo.png" class="img-fluid" alt="">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-red-600">
+                    <h4 class="font-bold text-slate-900 mb-2 text-sm uppercase">A. Arbitraje Fast-Track</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Implementación de cámaras especializadas para
+                        resolver controversias contractuales en menos de 90 días, atacando la causa del 26% de las
+                        paralizaciones registradas.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-blue-600">
+                    <h4 class="font-bold text-slate-900 mb-2 text-sm uppercase">B. Centralización Técnica (PMO)</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Traslado de proyectos críticos de gobiernos
+                        locales hacia unidades ejecutoras con mayor capacidad técnica y operativa, reduciendo
+                        expedientes deficientes.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl card-shadow border-t-4 border-slate-800">
+                    <h4 class="font-bold text-slate-900 mb-2 text-sm uppercase">C. Seguro de Continuidad</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Exigencia de nuevas garantías y pólizas de caución
+                        que permitan la sustitución inmediata de contratistas en caso de abandono de obra o resolución
+                        de contrato.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white text-slate-500 py-10 mt-12 border-t border-slate-200 text-center">
+        <div class="container mx-auto px-6 italic">
+            <p>&copy; 2026 Observatorio de Gestión Pública. Datos oficiales del SSI-MEF y CGR.</p>
+            <p class="mt-4 font-bold uppercase tracking-widest text-slate-700">Asesor: Mg. Tomás Aguero Correa | 949 758
+                732</p>
+        </div>
+    </footer>
+
+    <script>
+        Chart.register(ChartDataLabels);
+
+        // 1. Datos Maestros con Peso de Riesgo y Sector Predominante
+        let dataRegiones = [
+            { r: "Arequipa", s: "Agricultura", n: 94, i: 7579, risk: "Extremo", rw: 3 },
+            { r: "La Libertad", s: "Agricultura/Vías", n: 112, i: 5590, risk: "Extremo", rw: 3 },
+            { r: "Cusco", s: "Transportes/Salud", n: 382, i: 4210, risk: "Extremo", rw: 3 },
+            { r: "Piura", s: "Saneamiento", n: 125, i: 3887, risk: "Extremo", rw: 3 },
+            { r: "Puno", s: "Saneamiento/Riego", n: 277, i: 3145, risk: "Extremo", rw: 3 },
+            { r: "Lima Metropolitana", s: "Salud/Transportes", n: 176, i: 4706, risk: "Alto", rw: 2 },
+            { r: "Áncash", s: "Educación/Vías", n: 200, i: 2450, risk: "Alto", rw: 2 },
+            { r: "Ica", s: "Salud/Vivienda", n: 64, i: 2100, risk: "Alto", rw: 2 },
+            { r: "Cajamarca", s: "Vivienda/Salud", n: 139, i: 2826, risk: "Alto", rw: 2 },
+            { r: "Loreto", s: "T. Fluvial", n: 98, i: 1430, risk: "Medio", rw: 1 },
+            { r: "Huánuco", s: "Vías/Salud", n: 112, i: 1340, risk: "Medio", rw: 1 },
+            { r: "Junín", s: "Salud/Hospitales", n: 92, i: 1215, risk: "Medio", rw: 1 },
+            { r: "Lambayeque", s: "Saneamiento", n: 84, i: 1150, risk: "Medio", rw: 1 },
+            { r: "Ayacucho", s: "Agricultura", n: 105, i: 1120, risk: "Medio", rw: 1 },
+            { r: "Apurímac", s: "Salud", n: 94, i: 1080, risk: "Medio", rw: 1 },
+            { r: "Huancavelica", s: "Educación", n: 88, i: 940, risk: "Medio", rw: 1 },
+            { r: "San Martín", s: "Salud", n: 81, i: 920, risk: "Medio", rw: 1 },
+            { r: "Pasco", s: "Minería/San.", n: 67, i: 890, risk: "Medio", rw: 1 },
+            { r: "Amazonas", s: "Vías", n: 76, i: 810, risk: "Medio", rw: 1 },
+            { r: "Tacna", s: "Salud/Agua", n: 45, i: 750, risk: "Medio", rw: 1 },
+            { r: "Ucayali", s: "Energía", n: 55, i: 720, risk: "Medio", rw: 1 },
+            { r: "Moquegua", s: "Educación", n: 38, i: 610, risk: "Medio", rw: 1 },
+            { r: "Tumbes", s: "Defensa Civil", n: 42, i: 540, risk: "Medio", rw: 1 },
+            { r: "Callao", s: "Seguridad", n: 31, i: 490, risk: "Medio", rw: 1 },
+            { r: "Madre de Dios", s: "Vías", n: 29, i: 310, risk: "Medio", rw: 1 }
+        ];
+
+        // 2. Lógica de Ordenamiento
+        let currentSortCol = -1;
+        let sortAsc = true;
+
+        function sortTable(colIndex) {
+            const keys = ['r', 's', 'n', 'i', 'rw'];
+            const key = keys[colIndex];
+            if (currentSortCol === colIndex) sortAsc = !sortAsc;
+            else { currentSortCol = colIndex; sortAsc = (colIndex === 0 || colIndex === 1) ? true : false; }
+            dataRegiones.sort((a, b) => {
+                let valA = a[key], valB = b[key];
+                if (typeof valA === 'string') return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                else return sortAsc ? valA - valB : valB - valA;
+            });
+            renderTable();
+            updateIcons(colIndex);
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('regionTable');
+            tbody.innerHTML = '';
+            dataRegiones.forEach(d => {
+                const riskClass = d.risk === "Extremo" ? "risk-extremo" : d.risk === "Alto" ? "risk-alto" : "risk-medio";
+                tbody.innerHTML += `
+                <tr class="hover:bg-blue-50 transition border-b border-slate-100">
+                    <td class="px-6 py-3 font-bold text-xs text-slate-800 italic">${d.r}</td>
+                    <td class="px-6 py-3 text-xs text-slate-600 border-l border-slate-100 font-medium">${d.s}</td>
+                    <td class="px-6 py-3 text-center text-xs font-black text-slate-600 border-l border-slate-100">${d.n}</td>
+                    <td class="px-6 py-3 text-right text-xs font-black text-red-600 border-l border-slate-100">${d.i.toLocaleString()}</td>
+                    <td class="px-6 py-3 text-center border-l border-slate-100"><span class="risk-badge ${riskClass}">${d.risk}</span></td>
+                </tr>`;
+            });
+        }
+
+        function updateIcons(colIndex) {
+            document.querySelectorAll('th i').forEach(icon => icon.className = 'fa-solid fa-sort ml-1 text-slate-400');
+            const activeIcon = document.getElementById('icon-' + colIndex);
+            if (activeIcon) activeIcon.className = sortAsc ? 'fa-solid fa-sort-up ml-1 text-white' : 'fa-solid fa-sort-down ml-1 text-white';
+        }
+
+        sortTable(3);
+
+        // 3. Gráfico Sectorial
+        new Chart(document.getElementById('chartSectores'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Transportes', 'Vivienda y San.', 'Educación', 'Salud', 'Agro', 'Otros'],
+                datasets: [{
+                    data: [631, 514, 325, 287, 110, 874],
+                    backgroundColor: ['#0a2540', '#2563eb', '#f59e0b', '#dc2626', '#10b981', '#94a3b8'],
+                    borderWidth: 2, borderColor: '#ffffff', hoverOffset: 8
+                }]
+            },
+            options: {
+                maintainAspectRatio: false, cutout: '65%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { weight: '600', size: 10, family: 'Inter' } } },
+                    datalabels: { color: '#ffffff', font: { weight: '900', size: 12 }, formatter: (value) => value }
+                }
+            }
+        });
+
+        // 4. GRÁFICO CAUSAS AJUSTADO PARA SUMAR 2,741
+        new Chart(document.getElementById('chartCausas'), {
+            type: 'bar',
+            data: {
+                labels: ['Arbitrajes', 'Falta de Presupuesto', 'Expediente Deficiente', 'Abandono', 'Otros Motivos'],
+                datasets: [{
+                    label: 'Número de Obras',
+                    data: [540, 505, 112, 101, 1483],
+                    backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#94a3b8'],
+                    borderRadius: 8,
+                    barThickness: 35
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        anchor: 'end', align: 'right',
+                        color: '#0a2540', font: { weight: '900', size: 14 },
+                        formatter: (value) => value
+                    }
+                },
+                scales: {
+                    x: { grid: { display: false }, ticks: { display: false }, border: { display: false } },
+                    y: { grid: { display: false }, border: { display: false }, ticks: { font: { weight: '700', size: 12, family: 'Inter' } } }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

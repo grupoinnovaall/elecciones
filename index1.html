@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Estratégica - Agenda de Exposición</title>
+    <!-- Google Fonts para tipografía moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-card: #161f30;
+            --accent-cyan: #00f2fe;
+            --accent-purple: #4facfe;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --gradient: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-cyan) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Contenedor de Diapositivas */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            scroll-snap-align: start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Fondo dinámico sutil con gradiente */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.05) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* Numeración de diapositivas */
+        .slide-number {
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Títulos */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .main-title {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 4rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Botón de Vínculo de Alto Impacto */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000;
+            background: var(--text-main);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 15px 30px rgba(0, 242, 254, 0.3);
+        }
+
+        .action-btn svg {
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .action-btn:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* Navegación lateral fija (Indicadores) */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .dot:hover, .dot.active {
+            background: var(--accent-cyan);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Soporte para scroll snap en pantallas grandes */
+        @media (min-width: 768px) {
+            html {
+                scroll-snap-type: y mandatory;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            .slide { padding: 20px; }
+            .nav-dots { display: none; } /* Ocultar en móviles para mejor espacio */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación Lateral Dinámica -->
+    <div class="nav-dots">
+        <a href="#inicio" class="dot active" title="Inicio"></a>
+        <a href="#tema1" class="dot" title="Tema 1"></a>
+        <a href="#tema2" class="dot" title="Tema 2"></a>
+        <a href="#tema3" class="dot" title="Tema 3"></a>
+        <a href="#tema4" class="dot" title="Tema 4"></a>
+        <a href="#tema5" class="dot" title="Tema 5"></a>
+        <a href="#tema6" class="dot" title="Tema 6"></a>
+        <a href="#tema7" class="dot" title="Tema 7"></a>
+    </div>
+
+    <!-- DIAPOSITIVA DE INICIO / PORTADA -->
+    <section class="slide" id="inicio">
+        <div class="slide-content">
+            <div class="slide-number">Presentación Ejecutiva</div>
+            <h1 class="main-title">Agenda Estratégica</h1>
+            <p>Planificación electoral, inteligencia de datos y despliegue táctico nacional.</p>
+            <span style="color: var(--text-muted); font-size: 0.9rem; letter-spacing: 1px;">Deslice hacia abajo para comenzar</span>
+        </div>
+    </</section>
+
+    <!-- DIAPOSITIVA 1 -->
+    <section class="slide" id="tema1">
+        <div class="slide-content">
+            <div class="slide-number">01 / Plan Electoral</div>
+            <h2>Sistema de Personeros y Cómputo Rápido Electoral de JP</h2>
+            <p>Plan de trabajo integral y matrices de coordinación directa con líderes regionales clave a nivel nacional.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Ver Contenido del Sistema 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 2 -->
+    <section class="slide" id="tema2">
+        <div class="slide-content">
+            <div class="slide-number">02 / Inteligencia</div>
+            <h2>Inteligencia de Datos y Reportes de Clima Social</h2>
+            <p>Monitoreo estratégico y analítica en tiempo real a través de las principales redes sociales y medios de comunicación masivos.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Acceder a Reportes 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 3 -->
+    <section class="slide" id="tema3">
+        <div class="slide-content">
+            <div class="slide-number">03 / Infraestructura</div>
+            <h2>Obras de Inversión Pública Paralizada</h2>
+            <p>Diagnóstico crítico, mapeo georreferenciado e impacto socioeconómico de la infraestructura detenida.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Ver Análisis de Obras 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 4 -->
+    <section class="slide" id="tema4">
+        <div class="slide-content">
+            <div class="slide-number">04 / Propuesta</div>
+            <h2>Propuesta de Campaña de Segunda Vuelta</h2>
+            <p>Lineamientos conceptuales, mensajes fuerza y ejes de acción prioritarios para la fase definitoria.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Desplegar Propuesta 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 5 -->
+    <section class="slide" id="tema5">
+        <div class="slide-content">
+            <div class="slide-number">05 / Estrategia</div>
+            <h2>Estrategia de Captación de Votos</h2>
+            <p>Segmentación territorial orientada a los distritos de Lima y regiones del Perú, tomando como base analítica al bolsón de indecisos y variables demográficas.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Ver Plan de Captación 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 6 -->
+    <section class="slide" id="tema6">
+        <div class="slide-content">
+            <div class="slide-number">06 / Balance</div>
+            <h2>Plataformas y Actividades de Primera Vuelta</h2>
+            <p>Auditoría y balance de las herramientas digitales utilizadas, eventos clave y lecciones aprendidas del proceso inicial.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Revisar Historial 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIAPOSITIVA 7 -->
+    <section class="slide" id="tema7">
+        <div class="slide-content">
+            <div class="slide-number">07 / Consultores</div>
+            <h2>Referencias Profesionales del Equipo Expositor</h2>
+            <p>Trayectoria, especialidades y credenciales técnicas del equipo responsable del diseño e implementación de la estrategia.</p>
+            
+            <!-- REEMPLAZAR '#' POR TU VÍNCULO EN EL HREF -->
+            <a href="#" target="_blank" class="action-btn">
+                Ver Perfiles del Equipo 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Script para actualizar los puntos de navegación activos al hacer scroll -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            slides.forEach(slide => {
+                const slideTop = slide.offsetTop;
+                const slideHeight = slide.clientHeight;
+                if (pageYOffset >= (slideTop - slideHeight / 3)) {
+                    current = slide.getAttribute('id');
+                }
+            });
+
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('href').includes(current)) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Táctica - Conferencia Estratégica 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050a12;
+            --bg-card: rgba(13, 23, 42, 0.6);
+            --border-glow: rgba(0, 242, 254, 0.15);
+            --cyan-glow: #00f2fe;
+            --purple-glow: #7f00ff;
+            --text-main: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(127, 0, 255, 0.05) 0%, transparent 40%);
+        }
+
+        /* CONTENEDOR MÁSTER */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* HEADER DE GRAN IMPACTO (CABECERA) */
+        .hero-header {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-header:hover {
+            transform: scale(1.01);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .hero-header img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* CUADRÍCULA INNOVADORA (GRID INTERACTIVO) */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        /* TARJETAS TÁCTICAS (MÓDULOS 1 AL 7) */
+        .module-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--border-glow);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Imagen del módulo */
+        .module-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        /* Zona de interacción invisible que cubre el botón nativo de la imagen */
+        .interactive-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(5, 10, 18, 0.8) 0%, rgba(5, 10, 18, 0) 60%);
+            text-decoration: none;
+            z-index: 2;
+        }
+
+        /* Efectos Hover de la Tarjeta */
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(0, 242, 254, 0.15);
+        }
+
+        .module-card:hover img {
+            transform: scale(1.03);
+            filter: brightness(1.1);
+        }
+
+        /* Indicador flotante tecnológico de acción */
+        .action-indicator {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            padding: 8px 16px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        .module-card:hover .action-indicator {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animación sutil de entrada para la cuadrícula */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modules-grid {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px 10px;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="hero-header">
+            <img src="imagenes/cabecera.png" alt="Cabecera Conferencia Estratégica 2026">
+        </header>
+
+        <section class="modules-grid">
+
+            <div class="module-card">
+                <img src="imagenes/1-sistema-personerosok.jpeg" alt="Sistema de Personeros">
+                <a href="personeros/index.html" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">EJECUTAR SISTEMA</span>
+                </a>
+            </div>
+
+            <div class="module-card">
+                <img src="imagenes/2-inteligencia-datosok.jpeg" alt="Inteligencia de Datos">
+                <a href="clima-social/index.html" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">ABRIR DATACORE</span>
+                </a>
+            </div>
+
+            <div class="module-card">
+                <img src="imagenes/3-obras-paralizadasok.jpeg" alt="Obras de Inversión Pública Paralizada">
+                <a href="proyectos-paralizados/index.html" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">VER MAPEO NACIONAL</span>
+                </a>
+            </div>
+
+            <div class="module-card">
+                <img src="imagenes/4.propuesta-campaniaok.jpeg" alt="Propuesta de Campaña Segunda Vuelta">
+                <a href="https://docs.google.com/document/d/1H0rvHR4YO8nw2meOzrzQCJhz3E9_t6qCYMg95Lp-wxU/view?usp=sharing" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">DESPLEGAR ESTRATEGIA</span>
+                </a>
+            </div>
+
+            <div class="module-card">
+                <img src="imagenes/5.estrategia_captacion_votosok.jpeg" alt="Estrategia de Captación de Votos">
+                <a href="https://drive.google.com/file/d/1ZGFtbgAJny0sgxwMJvC1dUISwb6Ik34J/view?usp=sharing" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">VER OBJETIVOS LIMA/REGIONES</span>
+                </a>
+            </div>
+
+            <div class="module-card">
+                <img src="imagenes/6.plataformas-primera-vueltaok.jpeg" alt="Plataformas y Actividades Primera Vuelta">
+                <a href="https://eg26.dialoqia.com/" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">ABRIR HISTÓRICO</span>
+                </a>
+            </div>
+
+            <div class="module-card">
+                <img src="imagenes/7.referencias-profesionalesok.jpeg" alt="Referencias Profesionales del Equipo">
+                <a href="#" target="_blank" class="interactive-overlay">
+                    <span class="action-indicator">VER PERFILES CLAVE</span>
+                </a>
+            </div>
+
+        </section>
+    </div>
+
+</body>
+
+</html>

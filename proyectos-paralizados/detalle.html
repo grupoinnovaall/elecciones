@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Nacional: Obras Paralizadas 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <!-- Header -->
+    <header class="bg-red-700 text-white shadow-2xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-black tracking-tighter italic">PERÚ DATA <span class="text-red-200">2026</span>
+                </h1>
+                <p class="text-xs font-medium opacity-80 uppercase tracking-widest">Observatorio de Inversión Pública
+                    Paralizada</p>
+            </div>
+            <div class="text-right">
+                <span class="block text-xl font-bold">S/ 67,139 MM</span>
+                <span class="text-[10px] bg-white text-red-700 px-2 py-0.5 rounded font-bold italic underline">TOTAL
+                    INVERSIÓN ESTANCADA</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- DASHBOARD DE SECTORES (Matriz Nacional) -->
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-8 bg-red-600 inline-block"></span>
+            DISTRIBUCIÓN POR SECTORES ESTRATÉGICOS
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+            <!-- Transportes -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-blue-600 hover:shadow-md transition">
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Transportes</p>
+                <h3 class="text-2xl font-black text-blue-600">631</h3>
+                <p class="text-[10px] text-slate-500">Obras viales / Puentes</p>
+            </div>
+            <!-- Vivienda -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-cyan-500 hover:shadow-md transition">
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Vivienda/San.</p>
+                <h3 class="text-2xl font-black text-cyan-600">514</h3>
+                <p class="text-[10px] text-slate-500">Agua y Alcantarillado</p>
+            </div>
+            <!-- Salud -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-red-500 hover:shadow-md transition">
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Salud</p>
+                <h3 class="text-2xl font-black text-red-600">287</h3>
+                <p class="text-[10px] text-slate-500">Hospitales y Centros</p>
+            </div>
+            <!-- Educación -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-yellow-500 hover:shadow-md transition">
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Educación</p>
+                <h3 class="text-2xl font-black text-yellow-600">325</h3>
+                <p class="text-[10px] text-slate-500">Colegios y Campus</p>
+            </div>
+            <!-- Agricultura -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-green-600 hover:shadow-md transition">
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Agricultura</p>
+                <h3 class="text-2xl font-black text-green-600">110</h3>
+                <p class="text-[10px] text-slate-500">Riego y Represas</p>
+            </div>
+            <!-- Otros -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-slate-400 hover:shadow-md transition">
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Otros</p>
+                <h3 class="text-2xl font-black text-slate-600">874</h3>
+                <p class="text-[10px] text-slate-500">Cultura / Interior / Otros</p>
+            </div>
+        </div>
+
+        <!-- REPORTE POR TODAS LAS REGIONES -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Columna Izquierda: Visualización -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="font-bold text-lg mb-4 text-red-400 italic">Análisis de Concentración</h3>
+                    <canvas id="chartConcentracion" height="300"></canvas>
+                    <p class="mt-4 text-xs text-slate-400 leading-relaxed">
+                        El **Sur del Perú** (Cusco, Puno, Arequipa) concentra el 42% de la inversión paralizada total.
+                        La mayoría de proyectos en esta macroregión corresponden a Salud y Agricultura.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h4 class="font-bold text-sm uppercase text-slate-500 mb-4">Causas Administrativas</h4>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center">
+                            <span class="text-sm">Controversias/Arbitrajes</span>
+                            <span class="font-bold text-red-600">26%</span>
+                        </li>
+                        <div class="w-full bg-gray-200 h-1 rounded">
+                            <div class="bg-red-600 h-1 rounded" style="width: 26%"></div>
+                        </div>
+                        <li class="flex justify-between items-center">
+                            <span class="text-sm">Expedientes Deficientes</span>
+                            <span class="font-bold text-yellow-600">20%</span>
+                        </li>
+                        <div class="w-full bg-gray-200 h-1 rounded">
+                            <div class="bg-yellow-600 h-1 rounded" style="width: 20%"></div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: El Listado Detallado (Todas las Regiones) -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b flex justify-between items-center bg-slate-50">
+                    <h3 class="font-bold text-slate-800 uppercase tracking-tighter">Detalle Técnico por Departamento
+                    </h3>
+                    <button class="text-xs bg-slate-800 text-white px-3 py-1 rounded">Exportar PDF</button>
+                </div>
+                <div class="overflow-y-auto max-h-[600px] custom-scrollbar">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-white sticky top-0 shadow-sm">
+                            <tr class="text-slate-400 font-normal border-b">
+                                <th class="p-4">Región</th>
+                                <th class="p-4">Sector Predominante</th>
+                                <th class="p-4 text-center">N° Obras</th>
+                                <th class="p-4 text-right">Inversión (S/ MM)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <!-- Datos de todas las regiones -->
+                            <tr>
+                                <td class="p-4 font-bold">Cusco</td>
+                                <td class="p-4">Transportes / Educación</td>
+                                <td class="p-4 text-center">382</td>
+                                <td class="p-4 text-right font-mono">4,210</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold text-red-700">Arequipa</td>
+                                <td class="p-4">Agricultura (Majes)</td>
+                                <td class="p-4 text-center">94</td>
+                                <td class="p-4 text-right font-mono font-bold">7,579</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Puno</td>
+                                <td class="p-4">Saneamiento / Salud</td>
+                                <td class="p-4 text-center">277</td>
+                                <td class="p-4 text-right font-mono">3,145</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Lima (Metropolitana)</td>
+                                <td class="p-4">Transportes / Salud</td>
+                                <td class="p-4 text-center">176</td>
+                                <td class="p-4 text-right font-mono">2,890</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Áncash</td>
+                                <td class="p-4">Transportes / Educación</td>
+                                <td class="p-4 text-center">200</td>
+                                <td class="p-4 text-right font-mono">2,450</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Cajamarca</td>
+                                <td class="p-4">Vivienda / Salud</td>
+                                <td class="p-4 text-center">139</td>
+                                <td class="p-4 text-right font-mono">1,980</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold text-red-700">La Libertad</td>
+                                <td class="p-4">Agricultura / Transportes</td>
+                                <td class="p-4 text-center">112</td>
+                                <td class="p-4 text-right font-mono font-bold">5,590</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Piura</td>
+                                <td class="p-4">Saneamiento / Reconstrucción</td>
+                                <td class="p-4 text-center">125</td>
+                                <td class="p-4 text-right font-mono">3,887</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Ayacucho</td>
+                                <td class="p-4">Agricultura / Riego</td>
+                                <td class="p-4 text-center">105</td>
+                                <td class="p-4 text-right font-mono">1,120</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Loreto</td>
+                                <td class="p-4">Transporte Fluvial / Salud</td>
+                                <td class="p-4 text-center">98</td>
+                                <td class="p-4 text-right font-mono">1,430</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Huancavelica</td>
+                                <td class="p-4">Educación / Salud</td>
+                                <td class="p-4 text-center">88</td>
+                                <td class="p-4 text-right font-mono">940</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Junín</td>
+                                <td class="p-4">Salud / Vías</td>
+                                <td class="p-4 text-center">92</td>
+                                <td class="p-4 text-right font-mono">1,215</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold text-red-700">Ica</td>
+                                <td class="p-4">Salud / Vivienda</td>
+                                <td class="p-4 text-center">64</td>
+                                <td class="p-4 text-right font-mono font-bold">2,100</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Amazonas</td>
+                                <td class="p-4">Transportes</td>
+                                <td class="p-4 text-center">76</td>
+                                <td class="p-4 text-right font-mono">810</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">San Martín</td>
+                                <td class="p-4">Salud / Agrario</td>
+                                <td class="p-4 text-center">81</td>
+                                <td class="p-4 text-right font-mono">920</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Tacna</td>
+                                <td class="p-4">Salud / Agua</td>
+                                <td class="p-4 text-center">45</td>
+                                <td class="p-4 text-right font-mono">750</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Moquegua</td>
+                                <td class="p-4">Educación / Minería Ind.</td>
+                                <td class="p-4 text-center">38</td>
+                                <td class="p-4 text-right font-mono">610</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Tumbes</td>
+                                <td class="p-4">Defensa Ribereña</td>
+                                <td class="p-4 text-center">42</td>
+                                <td class="p-4 text-right font-mono">540</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Pasco</td>
+                                <td class="p-4">Saneamiento</td>
+                                <td class="p-4 text-center">67</td>
+                                <td class="p-4 text-right font-mono">890</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Ucayali</td>
+                                <td class="p-4">Energía / Salud</td>
+                                <td class="p-4 text-center">55</td>
+                                <td class="p-4 text-right font-mono">720</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Lambayeque</td>
+                                <td class="p-4">Saneamiento / Salud</td>
+                                <td class="p-4 text-center">84</td>
+                                <td class="p-4 text-right font-mono">1,150</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Madre de Dios</td>
+                                <td class="p-4">Transportes</td>
+                                <td class="p-4 text-center">29</td>
+                                <td class="p-4 text-right font-mono">310</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Apurímac</td>
+                                <td class="p-4">Salud / Educación</td>
+                                <td class="p-4 text-center">94</td>
+                                <td class="p-4 text-right font-mono">1,080</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">Huánuco</td>
+                                <td class="p-4">Transportes / Salud</td>
+                                <td class="p-4 text-center">112</td>
+                                <td class="p-4 text-right font-mono">1,340</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Callao</td>
+                                <td class="p-4">Seguridad / Salud</td>
+                                <td class="p-4 text-center">31</td>
+                                <td class="p-4 text-right font-mono">490</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-100 border-t mt-12 py-8">
+        <div class="container mx-auto px-6 text-center text-slate-500 text-xs">
+            <p>© 2026 Observatorio de Gestión Pública Perú. Datos basados en el Sistema de Seguimiento de Inversiones
+                (SSI).</p>
+            <p class="mt-2 font-bold text-red-600 uppercase">Documento de Uso Técnico y Ejecutivo</p>
+        </div>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('chartConcentracion').getContext('2d');
+        new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: ['Macro Sur', 'Macro Norte', 'Lima/Callao', 'Centro', 'Oriente'],
+                datasets: [{
+                    data: [42, 25, 12, 13, 8],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(245, 158, 11, 0.7)',
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(107, 114, 128, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                plugins: { legend: { labels: { color: 'white', font: { size: 10 } } } },
+                scales: { r: { grid: { color: '#334155' }, ticks: { display: false } } }
+            }
+        });
+    </script>
+</body>
+
+</html>

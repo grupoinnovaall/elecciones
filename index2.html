@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Estratégica - Conferencia 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #060b13;
+            --bg-sidebar: #0a111e;
+            --card-bg-1: linear-gradient(135deg, #111c2e 0%, #0c1524 100%);
+            --card-accent-blue: #00f2fe;
+            --card-accent-purple: #7f00ff;
+            --card-accent-cyan: #00f2fe;
+            --text-title: #ffffff;
+            --text-desc: #94a3b8;
+            --accent-gradient: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: #ffffff;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* BARRA LATERAL TÁCTICA */
+        aside {
+            width: 80px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .nav-item {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--card-accent-blue);
+            background: rgba(0, 242, 254, 0.05);
+            box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.1);
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        main {
+            margin-left: 80px;
+            flex: 1;
+            padding: 40px 60px;
+            max-width: 1600px;
+            position: relative;
+        }
+
+        /* ENCABEZADO INSTITUCIONAL */
+        header {
+            background: linear-gradient(90deg, rgba(22, 31, 48, 0.8) 0%, rgba(10, 17, 30, 0.4) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-title-block {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo-placeholder {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--card-accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 242, 254, 0.1);
+        }
+
+        .header-text h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-text p {
+            color: var(--text-desc);
+            font-size: 0.95rem;
+            margin-top: 2px;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #00f2fe;
+            letter-spacing: 1px;
+        }
+
+        /* GRILLA DE DIAPOSITIVAS / TARJETAS */
+        .grid-presentation {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        /* TARJETA / DIAPOSITIVA */
+        .agenda-card {
+            background: var(--card-bg-1);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 35px;
+            display: flex;
+            gap: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .agenda-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.03) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .agenda-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 254, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 242, 254, 0.03);
+        }
+
+        /* NUMERACIÓN INTERNA */
+        .card-index {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            font-style: italic;
+            user-select: none;
+        }
+
+        /* BLOQUE ICONOGRAFÍA ILUSTRATIVA */
+        .card-icon-wrapper {
+            flex-shrink: 0;
+            width: 85px;
+            height: 85px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-accent-blue);
+            z-index: 1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .agenda-card:nth-child(even) .card-icon-wrapper {
+            color: #a855f7;
+        }
+
+        /* BLOQUE CONTENIDO */
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .card-body h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            padding-right: 40px;
+        }
+
+        .card-body p {
+            font-size: 0.95rem;
+            color: var(--text-desc);
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* BOTÓN INTERACTIVO PARA ENLACE */
+        .vinc-button {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .vinc-button:hover {
+            background: var(--accent-gradient);
+            color: #000000;
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        .vinc-button svg {
+            transition: transform 0.3s ease;
+        }
+
+        .vinc-button:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1150px) {
+            .grid-presentation {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            aside { display: none; }
+            main { margin-left: 0; padding: 20px; }
+            header { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .agenda-card { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ LATERAL TÁCTICO -->
+    <aside>
+        <div class="brand-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        <div class="nav-menu">
+            <a href="#" class="nav-item active">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO GENERAL -->
+    <main>
+        <!-- PORTADA INTERNA / HEADER -->
+        <header>
+            <div class="header-title-block">
+                <div class="header-logo-placeholder">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <div class="header-text">
+                    <h1>Conferencia Estratégica Nacional</h1>
+                    <p>Planificación de Campaña y Análisis de Datos Macrorregionales</p>
+                </div>
+            </div>
+            <div class="header-badge">EDICIÓN 2026</div>
+        </header>
+
+        <!-- CUADRÍCULA DE DIAPOSITIVAS -->
+        <section class="grid-presentation">
+
+            <!-- CARD 1 -->
+            <div class="agenda-card">
+                <div class="card-index">01</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Escudo/Votación electoral -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 11l2 2 4-4"></path></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Sistema de Personeros y Cómputo Rápido Electoral (JP)</h2>
+                        <p>Estructura de plan de trabajo integral y matrices de despliegue coordinado con líderes regionales a nivel nacional.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="agenda-card">
+                <div class="card-index">02</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Inteligencia / Redes / Datos -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3z"></path><path d="M6 21a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3v12a3 3 0 0 0 3 3z"></path></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Inteligencia de Datos y Reportes de Clima Social</h2>
+                        <p>Monitoreo computarizado de la opinión pública mediante minería de datos de redes sociales y medios de prensa.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="agenda-card">
+                <div class="card-index">03</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Infraestructura / Alerta / Paralizado -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Obras de Inversión Pública Paralizada</h2>
+                        <p>Informe analítico y cuantitativo sobre proyectos de infraestructura y servicios congelados en el territorio nacional.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="agenda-card">
+                <div class="card-index">04</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Megáfono / Campaña -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Propuesta de Campaña de Segunda Vuelta</h2>
+                        <p>Ejes fundamentales de discurso técnico, estrategias de comunicación persuasiva y enfoque táctico inmediato.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="agenda-card">
+                <div class="card-index">05</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Target / Mapa Perú / Captación -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Estrategia de Captación de Votos (Lima y Regiones)</h2>
+                        <p>Planes focalizados de penetración en distritos clave, basándose en segmentos demográficos de indecisos.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="agenda-card">
+                <div class="card-index">06</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Capas / Plataformas -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Plataformas y Actividades de Primera Vuelta</h2>
+                        <p>Métricas consolidadas, balance de despliegue digital y acciones de campo ejecutadas en la fase previa.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 7 -->
+            <div class="agenda-card" style="grid-column: span 1;">
+                <div class="card-index">07</div>
+                <div class="card-icon-wrapper">
+                    <!-- Icono Equipo / Usuarios -->
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h2>Referencias Profesionales del Equipo Expositor</h2>
+                        <p>Hojas de vida sintéticas, capacidades del comité consultor y experiencia en alta dirección pública o electoral.</p>
+                    </div>
+                    <!-- Colocar el enlace aquí de forma manual reemplazando el '#' -->
+                    <a href="#" target="_blank" class="vinc-button">
+                        Ver Vínculo 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>

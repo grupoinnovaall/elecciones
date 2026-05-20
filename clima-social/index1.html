@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Estratégico de Clima Social - Segunda Vuelta 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <header class="bg-slate-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-xl font-bold tracking-tight">INFORME ESTRATÉGICO DE CLIMA SOCIAL</h1>
+                <p class="text-xs text-slate-400 mt-1">Monitoreo de conversación y respuestas en X (Twitter) | Corte: 20 de mayo de 2026</p>
+            </div>
+            <div class="bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-center">
+                <span class="text-xs text-slate-400 block uppercase font-semibold">Ámbito</span>
+                <span class="text-sm font-bold text-sky-400">Segunda Vuelta Presidencial (Perú)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Intención de Voto (Ipsos)</p>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <span class="text-2xl font-bold text-slate-900">K: 39% vs R: 35%</span>
+                </div>
+                <p class="text-xs text-amber-600 font-medium mt-1">⚠️ Brecha de 4 puntos porcentuales</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Volumen de Posts</p>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <span class="text-2xl font-bold text-slate-900">391</span>
+                    <span class="text-xs text-gray-400">menciones totales</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">K. Fujimori: 208 | R. Sánchez: 183</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Interacciones Totales</p>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <span class="text-2xl font-bold text-red-600">3,033</span>
+                </div>
+                <p class="text-xs text-red-500 font-medium mt-1">🔥 Alto enganche en críticas a Sánchez</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-xs border border-gray-100">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Reducción Antivoto Keiko</p>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <span class="text-2xl font-bold text-emerald-600">-20%</span>
+                </div>
+                <p class="text-xs text-emerald-600 font-medium mt-1">📉 Bajó del 64% al 44% en debates</p>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-white p-5 rounded-xl shadow-xs border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-gray-900">Roberto Sánchez</h3>
+                        <span class="px-2 py-0.5 text-xs font-semibold bg-red-100 text-red-800 rounded-full">Riesgo Reputacional</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-4">Estructura del sentimiento de conversación directa.</p>
+                </div>
+                <div class="h-48 flex justify-center items-center">
+                    <canvas id="chartSanchez"></canvas>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-100 text-xs space-y-1.5 text-gray-600">
+                    <div>• 💬 <strong>154 Replies:</strong> Alta tasa de refutación en comentarios (39.0% neg).</div>
+                    <div>• 📉 <strong>Voto Rural:</strong> Pérdida de 6 puntos según Ipsos dinamiza críticas.</div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow-xs border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-gray-900">Keiko Fujimori</h3>
+                        <span class="px-2 py-0.5 text-xs font-semibold bg-slate-100 text-slate-800 rounded-full">Mixto / Neutro</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-4">Estructura del sentimiento de conversación directa.</p>
+                </div>
+                <div class="h-48 flex justify-center items-center">
+                    <canvas id="chartKeiko"></canvas>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-100 text-xs space-y-1.5 text-gray-600">
+                    <div>• 🔄 <strong>100 Quotes:</strong> Riesgo por re-circulación constante de críticas pasadas.</div>
+                    <div>• ⚖️ <strong>Voto Útil:</strong> Consolidación bajo la narrativa del "mal menor seguro".</div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow-xs border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-gray-900 mb-1">Ejes del Debate</h3>
+                    <p class="text-xs text-gray-500 mb-4">Términos con mayor frecuencia e impacto.</p>
+                </div>
+                
+                <div class="space-y-4 my-auto">
+                    <div>
+                        <span class="text-xs font-semibold text-red-700 block mb-1">Flancos de Roberto Sánchez:</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">#Francke</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">#Castillo</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">#VotoRural</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">CampañaDormida</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold text-slate-700 block mb-1">Flancos de Keiko Fujimori:</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">#MalMenor</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">Const93</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">#Antivoto</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-700">Inestabilidad</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-gray-100 bg-amber-50 p-2.5 rounded-lg border border-amber-100 text-xs text-amber-800">
+                    <strong>Alerta Común:</strong> Ambos candidatos registran <strong>0 Retweets Puros</strong> en la muestra, reflejando baja viralidad orgánica directa sin inyección presupuestal.
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 rounded-xl shadow-xs border border-gray-100">
+            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                🚀 Plan de Acción y Líneas Estratégicas Recomendadas
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-red-50/50 p-4 rounded-xl border border-red-100">
+                    <h4 class="font-bold text-red-900 text-sm mb-3 flex items-center gap-2">
+                        <span>🔴 Contención para Roberto Sánchez</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-500 mt-0.5">1.</span>
+                            <span><strong>Control del Daño Legal:</strong> Desmentir acusaciones graves e infundadas que asocian la candidatura con agentes externos desestabilizadores para mitigar el 43.7% de negatividad.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-500 mt-0.5">2.</span>
+                            <span><strong>Contrarrestar Percepción de Inacción:</strong> Desplegar de inmediato microcampañas territoriales en video (TikTok) para reposicionar la marca en el sector rural abandonado.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-500 mt-0.5">3.</span>
+                            <span><strong>Blindaje Técnico:</strong> Encuadrar las alianzas (p. ej. Francke) bajo un eje exclusivo de soluciones de empleo y reactivación, limitando el flanco de "herencia de la gestión anterior".</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+                        <span>🔵 Consolidación para Keiko Fujimori</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="text-slate-600 mt-0.5">1.</span>
+                            <span><strong>Capitalizar el Voto Neutral (53.4%):</strong> Convertir la masa crítica moderada a través de infografías y materiales de fácil asimilación sobre planes de gobernabilidad económica.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-slate-600 mt-0.5">2.</span>
+                            <span><strong>Campaña "Sana" anti-antivoto:</strong> Evitar la saturación del discurso de confrontación radical. Priorizar la predictibilidad e institucionalidad para blindar el decrecimiento del antivoto (44%).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-slate-600 mt-0.5">3.</span>
+                            <span><strong>Mitigar Recirculación de Citas:</strong> Interceptar activamente narrativas opositoras en los <i>Quotes</i> con respuestas ágiles de voceros técnicos oficiales.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const ctxSanchez = document.getElementById('chartSanchez').getContext('2d');
+        new Chart(ctxSanchez, {
+            type: 'doughnut',
+            data: {
+                labels: ['Positivo', 'Neutral', 'Negativo'],
+                datasets: [{
+                    data: [9.8, 46.4, 43.7],
+                    backgroundColor: ['#10B981', '#94A3B8', '#EF4444'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                }
+            }
+        });
+
+        const ctxKeiko = document.getElementById('chartKeiko').getContext('2d');
+        new Chart(ctxKeiko, {
+            type: 'doughnut',
+            data: {
+                labels: ['Positivo', 'Neutral', 'Negativo'],
+                datasets: [{
+                    data: [9.1, 53.4, 37.5],
+                    backgroundColor: ['#10B981', '#94A3B8', '#F59E0B'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

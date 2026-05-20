@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Político Estratégico - Segunda Vuelta 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <header class="bg-slate-900 text-white shadow-lg border-b border-sky-900">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span class="bg-sky-500/10 text-sky-400 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-sky-500/20">
+                    Control de Mando Digital
+                </span>
+                <h1 class="text-2xl font-black tracking-tight mt-1">EVALUACIÓN DE CLIMA SOCIAL & ESTRATEGIA DE VOTO</h1>
+                <p class="text-xs text-slate-400 mt-1">Análisis Comparativo en X (Twitter) | Datos de Ipsos al 20 de mayo de 2026</p>
+            </div>
+            <div class="flex gap-3">
+                <div class="bg-slate-800/80 border border-slate-700 px-4 py-2 rounded-xl text-center">
+                    <span class="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">K. Fujimori</span>
+                    <span class="text-xl font-black text-emerald-400">39%</span>
+                </div>
+                <div class="bg-slate-800/80 border border-slate-700 px-4 py-2 rounded-xl text-center">
+                    <span class="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">R. Sánchez</span>
+                    <span class="text-xl font-black text-amber-400">35%</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-extrabold text-lg text-slate-900">Roberto Sánchez</h3>
+                        <span class="px-2.5 py-0.5 text-xs font-bold bg-red-50 text-red-700 rounded-full border border-red-100">Alerta: Riesgo Reputacional</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6">Muestra de 183 publicaciones con alto nivel de réplica y hostilidad.</p>
+                </div>
+                <div class="h-56 relative flex justify-center items-center">
+                    <canvas id="canvasSanchez"></canvas>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 bg-red-50/40 p-3 rounded-xl border border-red-100/50 text-xs text-red-900">
+                    ⚠️ <strong>Flanco Crítico:</strong> Registra 154 comentarios directos (Replies). Cada ataque genera una alta tracción de réplica negativa (39.0%), amplificando acusaciones difamatorias.
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-extrabold text-lg text-slate-900">Keiko Fujimori</h3>
+                        <span class="px-2.5 py-0.5 text-xs font-bold bg-slate-50 text-slate-700 rounded-full border border-slate-200">Estado: Mixto / Neutro</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6">Muestra de 208 publicaciones dominadas por corrientes moderadas.</p>
+                </div>
+                <div class="h-56 relative flex justify-center items-center">
+                    <canvas id="canvasKeiko"></canvas>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 bg-slate-50 p-3 rounded-xl border border-slate-200/60 text-xs text-slate-700">
+                    🔄 <strong>Punto de Atención:</strong> Concentra su volumen en 100 citas (Quotes). Su riesgo principal es la re-circulación ininterrumpida de discursos sobre su antivoto histórico.
+                </div>
+            </div>
+
+        </section>
+
+        <section class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 rounded-2xl shadow-md border border-indigo-900/40">
+            <div class="border-b border-indigo-800 pb-4 mb-6">
+                <h2 class="text-xl font-black text-sky-400 uppercase tracking-wide flex items-center gap-2">
+                    🎯 ESTRATEGIA DE CRECIMIENTO: REVOLUCIÓN DIGITAL ROBERTO SÁNCHEZ
+                </h2>
+                <p class="text-xs text-slate-300 mt-1">Acciones inmediatas destinadas a romper el estancamiento, revertir la negatividad y recuperar la intención de voto.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-sm border border-red-500/20">
+                        01
+                    </div>
+                    <h3 class="font-bold text-sm text-white uppercase tracking-tight">Mitigar el Impacto Reputacional (Contención)</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        El 43.7% de sentimiento negativo se alimenta de ataques difamatorios sin verificar (vínculos falsos con el extranjero). Se debe implementar una <strong class="text-red-400">estrategia de desmentido tajante e inmediato</strong> en canales oficiales de prensa, restándoles espacio de tracción en X y desactivando el enganche hostil de las cuentas críticas.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-sm border border-sky-500/20">
+                        02
+                    </div>
+                    <h3 class="font-bold text-sm text-sky-300 uppercase tracking-tight">Recuperar el Voto Rural Perdiéndole el Miedo a TikTok</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Ipsos evidencia una alarmante caída de 6 puntos en el sector rural debido a una percepción de "campaña dormida". Es urgente transformar el despliegue del candidato en <strong class="text-sky-400">contenido nativo de alta emotividad en TikTok e Instagram Reels</strong>, mostrando contacto directo con la población de las regiones y combatiendo la inacción mediante dinamismo visual.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl space-y-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-sm border border-emerald-500/20">
+                        03
+                    </div>
+                    <h3 class="font-bold text-sm text-emerald-300 uppercase tracking-tight">Blindaje de Equipos y Captura del Voto Técnico</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Las críticas atacan la incorporación de Pedro Francke ligándolo a la recesión. La estrategia debe <strong class="text-emerald-400">re-encuadrar el discurso hacia soluciones inmediatas de empleo</strong> e incentivos económicos de emergencia, alejando a los voceros de debates ideológicos o constitucionales abstractos para ganarse la confianza del sector moderado.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="mt-6 bg-sky-950/60 border border-sky-800/80 p-4 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="text-xs text-slate-200">
+                    💡 <strong>Oportunidad de Oro:</strong> El 53.4% de la conversación de Keiko Fujimori es neutral y su antivoto se sitúa en 44%. Si Sánchez asume propuestas concretas de orden e institucionalidad económica, tiene la capacidad de capturar ese bolsón indeciso que rechaza los antecedentes del fujimorismo.
+                </div>
+                <div class="text-xs font-mono font-bold bg-sky-900 text-sky-300 px-3 py-1.5 rounded-md shrink-0 border border-sky-700/50">
+                    META MÍNIMA: CERRAR BRECHA DEL 4%
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Registrar el plugin de etiquetas de datos globalmente para que pinte los números dentro de las tortas
+        Chart.register(ChartDataLabels);
+
+        const configComun = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { boxWidth: 12, padding: 15, font: { size: 11, weight: 'bold' } }
+                },
+                datalabels: {
+                    color: '#FFF',
+                    font: { weight: 'bold', size: 13 },
+                    formatter: (value) => value + '%', // Agrega el símbolo de porcentaje de forma automática
+                }
+            }
+        };
+
+        // Render gráfico Roberto Sánchez
+        new Chart(document.getElementById('canvasSanchez'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Positivo', 'Neutral', 'Negativo'],
+                datasets: [{
+                    data: [9.8, 46.4, 43.7],
+                    backgroundColor: ['#10B981', '#94A3B8', '#EF4444'], // Verde, Gris, Rojo
+                    hoverOffset: 4
+                }]
+            },
+            options: configComun
+        });
+
+        // Render gráfico Keiko Fujimori
+        new Chart(document.getElementById('canvasKeiko'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Positivo', 'Neutral', 'Negativo'],
+                datasets: [{
+                    data: [9.1, 53.4, 37.5],
+                    backgroundColor: ['#10B981', '#94A3B8', '#F59E0B'], // Verde, Gris, Ámbar (Menos crítico)
+                    hoverOffset: 4
+                }]
+            },
+            options: configComun
+        });
+    </script>
+</body>
+</html>
